@@ -1,0 +1,67 @@
+<idea-plugin>
+    <id>uk.org.oliveira.vg</id>
+    <name>VG</name>
+    <vendor email="victor@oliveira.org.uk" url="http://oliveira.org.uk">Oliveira.org.uk</vendor>
+
+    <description> <![CDATA[
+     DB version manager plugin used internally for Cordant Central Services IT Team.
+    ]]></description>
+
+    <!-- please see https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html
+         on how to target different products -->
+    <depends>com.intellij.modules.platform</depends>
+
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- Add your extensions here -->
+        <notificationGroup displayType="BALLOON" id="VGAlerts"/>
+        <psi.treeChangeListener implementation="uk.org.oliveira.vg.version_json.FileChangeListener"/>
+    </extensions>
+
+
+    <actions>
+        <!-- Add your actions here -->
+        <group id="uk.org.oliveira.vg"
+               text="VG"
+               icon="VGPluginIcons.PluginIcon"
+               popup="true" searchable="true">
+            <add-to-group group-id="ScopeViewPopupMenu" anchor="last"/>
+            <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
+
+            <action class="uk.org.oliveira.vg.current_folder.NewCurrentFolderAction"
+                    text="VG: New Current Folder"
+                    icon="VGPluginIcons.NewCurrentFolderAction"
+                    description="Create a new VG current folder.">
+                <override-text place="MainMenu" text="Current Folder"/>
+                <override-text place="ProjectViewPopup" text="Current Folder"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+                <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewDir"/>
+            </action>
+
+            <action class="uk.org.oliveira.vg.store_procedure.NewStoreProcedureAction"
+                    text="VG: New Store Procedure"
+                    icon="VGPluginIcons.NewStoreProcedureAction"
+                    description="Create a new templated store procedure.">
+                <override-text place="MainMenu" text="Store Procedure"/>
+                <override-text place="ProjectViewPopup" text="Store Procedure"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+                <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
+            </action>
+
+            <action class="uk.org.oliveira.vg.baseline.AddBaselineToCurrentFolderAction"
+                    text="VG: Add Baseline To Current Folder"
+                    icon="VGPluginIcons.AddBaselineToCurrentFolderAction"
+                    description="Adds the selected baseline file to the current folder.">
+                <override-text place="ProjectViewPopup" text="Add Baseline To Current Folder"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+            </action>
+            <action class="uk.org.oliveira.vg.version_json.CreateVersionJsonFileAction"
+                    text="VG: Rebuild 'version.json' File"
+                    icon="VGPluginIcons.RebuildVersionJsonFileAction"
+                    description="Rebuilds a new VG version.json file with currently available files.">
+                <override-text place="ProjectViewPopup" text="Rebuild 'version.json' File"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+            </action>
+        </group>
+    </actions>
+</idea-plugin>

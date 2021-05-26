@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.intellij' version '0.7.3'
+}
+
+group 'uk.org.oliveira'
+version '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+// See https://github.com/JetBrains/gradle-intellij-plugin/
+ intellij {
+    version '2021.1.1'
+}
+
+patchPluginXml {
+    changeNotes """
+    <h2>current</h2>
+    <ul>
+        <li>Creates a new 'current' folder.</li>
+        <li>Manages 'version.json' file, automatic add and remove when new files are added.</li>
+        <li>Add baseline file to 'current' folder.</li>
+        <li>Adds predefined store procedure template.</li>
+    </ul>
+    """
+}
+test {
+    useJUnitPlatform()
+}
