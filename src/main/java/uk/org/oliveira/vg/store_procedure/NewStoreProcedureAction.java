@@ -33,7 +33,9 @@ public class NewStoreProcedureAction extends AnAction {
         if (selectedFile != null) {
             NewStoreProcedureSetupDialog newStoreProcedureSetupDialog = new NewStoreProcedureSetupDialog(project);
             if (newStoreProcedureSetupDialog.showAndGet()) {
-                String storeProcedureName = newStoreProcedureSetupDialog.getStoreProcedureName();
+                String prefix = newStoreProcedureSetupDialog.getStoreProcedurePrefix();
+                String name = newStoreProcedureSetupDialog.getStoreProcedureName();
+                List<String> arguments = newStoreProcedureSetupDialog.getArguments();
                 String returnType = newStoreProcedureSetupDialog.getReturnType();
                 String volatility = newStoreProcedureSetupDialog.getVolatility();
                 List<String> userAuthorizationRoles = newStoreProcedureSetupDialog.getUserAuthorizationRoles();
@@ -49,12 +51,7 @@ public class NewStoreProcedureAction extends AnAction {
                         targetDirectoryPath = selectedFile.getParent().getPath();
                     }
 
-                    StoreProcedure procedure = new StoreProcedure(
-                            storeProcedureName,
-                            returnType,
-                            volatility,
-                            userAuthorizationRoles
-                    );
+                    StoreProcedure procedure = new StoreProcedure(prefix, name, arguments, returnType, volatility, userAuthorizationRoles);
                     String targetPath = procedure.writeFile(targetDirectoryPath);
 
 

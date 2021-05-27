@@ -15,13 +15,22 @@ public class StoreProcedure {
     private String lines = "";
     public String name;
 
-    protected StoreProcedure(@NotNull String name, @NotNull String returnType, @NotNull String volatility, @NotNull List<String> roles) throws IOException {
-        this.name = name.concat(".sql");
+    protected StoreProcedure(@NotNull String prefix, @NotNull String name, @NotNull List<String> arguments, @NotNull String returnType, @NotNull String volatility, @NotNull List<String> roles) throws IOException {
+        String fullName = prefix.concat("_").concat(name);
+        this.name = fullName.concat(".sql");
         this.lines = VGUtils.getFileLinesFromResource(storeProcedureTemplatePath);
         if (this.lines != null) {
-            this.lines = this.lines.replace("{{FUNCTION_NAME}}", name);
+            this.lines = this.lines.replace("{{FUNCTION_NAME}}", fullName);
+
+            String argumentsList = "";
+            for (String argument : arguments) {
+                argumentsList = argumentsList.concat(", ".concat(argument));
+            }
+            this.lines = this.lines.replace("{{ARGUMENTS}}", argumentsList);
+
             this.lines = this.lines.replace("{{RETURN_TYPE}}", returnType);
             this.lines = this.lines.replace("{{VOLATILITY}}", volatility);
+            this.lines = this.lines.replace("{{PREFIX}}", prefix);
 
             String rolesList = "NULL";
             if (roles.size() > 0) {

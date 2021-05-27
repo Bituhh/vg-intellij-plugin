@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NewStoreProcedureSetupDialog extends DialogWrapper {
+    private final Project project;
 
     private final JBTextField prefix = new JBTextField();
     private final JBTextField name = new JBTextField();
@@ -33,8 +34,13 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
     private final JBList<String> userAuthorizationRolesList = new JBList<>();
     private final ToolbarDecorator userAuthorizationRolesDecorator = ToolbarDecorator.createDecorator(this.userAuthorizationRolesList);
 
+    private final List<String> arguments = new ArrayList<>();
+    private final JBList<String> argumentsList = new JBList<>();
+    private final ToolbarDecorator argumentsDecorator = ToolbarDecorator.createDecorator(this.argumentsList);
+
     protected NewStoreProcedureSetupDialog(@Nullable Project project) {
         super(project, true);
+        this.project = project;
         init();
         setTitle("New Store Procedure Setup");
     }
@@ -46,9 +52,12 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
                 .addLabeledComponent("Return type", getReturnTypePanel(), true)
                 .addLabeledComponent("Volatility", getVolatilityPanel(), true)
                 .addSeparator()
+                .addLabeledComponent("Arguments", getArgumentsPanel(), true)
+                .addSeparator()
                 .addLabeledComponent("User authorization roles", getUserAuthorizationRolesPanel(), true)
                 .getPanel();
     }
+
 
     @Override
     protected @Nullable ValidationInfo doValidate() {
@@ -56,13 +65,13 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
             return new ValidationInfo("Procedure prefix must not be empty!");
         }
         if (!this.prefix.getText().endsWith("f")) {
-            return new ValidationInfo("Procedure prefix must end with 'f'!");
+            return new ValidationInfo("Procedure prefix must end with an 'f'!");
         }
         if (this.name.getText().isEmpty()) {
             return new ValidationInfo("Procedure name must not be empty!");
         }
-        if (!this.name.getText().matches("[a-z_]+")) {
-            return new ValidationInfo("Procedure name must match regex '[a-z_]+'!");
+        if (!this.name.getText().matches("[a-z0-9_]+")) {
+            return new ValidationInfo("Procedure name must match regex '[a-z0-9_]+'!");
         }
         return null;
     }
@@ -126,8 +135,52 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
         return this.userAuthorizationRolesDecorator.createPanel();
     }
 
+    private JPanel getArgumentsPanel() {
+        this.argumentsDecorator.setToolbarPosition(ActionToolbarPosition.RIGHT);
+        this.argumentsDecorator.setAddAction(a -> {
+            ArgumentsDialog argumentsDialog = new ArgumentsDialog(this.project);
+
+            if (argumentsDialog.showAndGet()) {
+                System.out.println(argumentsDialog.getName().concat(" ").concat(argumentsDialog.getType()));
+                this.arguments.add(argumentsDialog.getName().concat(" ").concat(argumentsDialog.getType()));
+                this.argumentsList.setListData(this.arguments.toArray(String[]::new));
+            }
+        }).setRemoveAction(a -> {
+            int selectedIndex = this.argumentsList.getSelectedIndex();
+            this.arguments.remove(selectedIndex);
+            this.argumentsList.setListData(this.arguments.toArray(String[]::new));
+        }).setMoveUpAction(a -> move(Direction.UP)).setMoveDownAction(a -> move(Direction.DOWN));
+
+        return this.argumentsDecorator.createPanel();
+    }
+
+    public List<String> getArguments() {
+        return this.arguments;
+    }
+
+    private enum Direction {
+        UP, DOWN
+    }
+
+    private void move(Direction direction) {
+        int i = this.argumentsList.getSelectedIndex() - 1;
+        if (direction == Direction.DOWN) {
+            i = this.argumentsList.getSelectedIndex() + 1;
+        }
+        int j = this.argumentsList.getSelectedIndex();
+        String s = this.arguments.get(i);
+        this.arguments.set(i, this.arguments.get(j));
+        this.arguments.set(j, s);
+        this.argumentsList.setListData(this.arguments.toArray(String[]::new));
+        this.argumentsList.setSelectedIndex(i);
+    }
+
+    public String getStoreProcedurePrefix() {
+        return this.prefix.getText();
+    }
+
     public String getStoreProcedureName() {
-        return this.prefix.getText().concat("_").concat(this.name.getText()).toLowerCase();
+        return this.name.getText();
     }
 
     public String getReturnType() {
