@@ -15,8 +15,11 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <notificationGroup displayType="BALLOON" id="VGAlerts"/>
-        <psi.treeChangeListener implementation="uk.org.oliveira.vg.version_json.FileChangeListener"/>
     </extensions>
+
+    <applicationListeners>
+        <listener class="uk.org.oliveira.vg.version_json.FileChangeListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+    </applicationListeners>
 
 
     <actions>
