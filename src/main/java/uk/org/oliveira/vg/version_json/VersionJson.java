@@ -64,7 +64,7 @@ public class VersionJson {
         return ""
                 .concat("[\n")
                 .concat("    {\n")
-                .concat("        \"userToUser\": \"root\",\n")
+                .concat("        \"userToUse\": \"root\",\n")
                 .concat("        \"dependencies\": [],\n")
                 .concat("        \"fileList\": [\n")
                 .concat("            ").concat(filesPaths).concat("\n")
