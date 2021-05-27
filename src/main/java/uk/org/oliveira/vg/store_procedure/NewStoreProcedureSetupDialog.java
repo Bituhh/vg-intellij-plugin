@@ -141,7 +141,6 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
             ArgumentsDialog argumentsDialog = new ArgumentsDialog(this.project);
 
             if (argumentsDialog.showAndGet()) {
-                System.out.println(argumentsDialog.getName().concat(" ").concat(argumentsDialog.getType()));
                 this.arguments.add(argumentsDialog.getName().concat(" ").concat(argumentsDialog.getType()));
                 this.argumentsList.setListData(this.arguments.toArray(String[]::new));
             }

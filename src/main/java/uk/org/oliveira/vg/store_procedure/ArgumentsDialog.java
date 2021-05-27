@@ -3,21 +3,36 @@ package uk.org.oliveira.vg.store_procedure;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.ValidationInfo;
+import com.intellij.ui.TextFieldWithAutoCompletion;
+import com.intellij.ui.TextFieldWithAutoCompletionListProvider;
 import com.intellij.ui.components.JBTextField;
+import com.intellij.util.textCompletion.TextFieldWithCompletion;
 import com.intellij.util.ui.FormBuilder;
 import org.jdesktop.swingx.HorizontalLayout;
 import org.jetbrains.annotations.Nullable;
+import uk.org.oliveira.vg.VGState;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class ArgumentsDialog extends DialogWrapper {
 
     private final JBTextField name = new JBTextField();
-    private final JBTextField type = new JBTextField();
+    private final Project project;
+    private final TextFieldWithAutoCompletion type;
+
+    private final Dimension defaultDimension = new Dimension(300, 30);
 
 
     protected ArgumentsDialog(@Nullable Project project) {
         super(project, true);
+        VGState state = VGState.getInstance();
+        this.project = project;
+        TextFieldWithAutoCompletionListProvider<String> provider = new TextFieldWithAutoCompletion.StringsCompletionProvider(Arrays.asList(state.typeSuggestions), null);
+        this.type = new TextFieldWithAutoCompletion<>(this.project, provider, false, null);
         init();
         setTitle("Argument Details");
     }
@@ -52,14 +67,14 @@ public class ArgumentsDialog extends DialogWrapper {
 
     private JPanel getNamePanel() {
         JPanel panel = new JPanel(new HorizontalLayout());
-        this.name.setColumns(25);
+        this.name.setPreferredSize(this.defaultDimension);
         panel.add(this.name);
         return panel;
     }
 
     private JPanel getTypePanel() {
         JPanel panel = new JPanel(new HorizontalLayout());
-        this.type.setColumns(25);
+        this.type.setPreferredSize(this.defaultDimension);
         panel.add(this.type);
         return panel;
     }
@@ -69,6 +84,15 @@ public class ArgumentsDialog extends DialogWrapper {
     }
 
     public String getType() {
-        return this.type.getText().toUpperCase();
+        String formattedType = this.type.getText().toUpperCase();
+
+        VGState state = VGState.getInstance();
+        List<String> tempList = new ArrayList<>(Arrays.asList(state.typeSuggestions));
+        if (!tempList.contains(formattedType)) {
+            tempList.add(formattedType);
+            state.typeSuggestions = tempList.toArray(String[]::new);
+        }
+
+        return formattedType;
     }
 }

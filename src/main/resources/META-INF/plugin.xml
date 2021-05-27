@@ -15,12 +15,17 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- Add your extensions here -->
         <notificationGroup displayType="BALLOON" id="VGAlerts"/>
+        <applicationConfigurable parentId="other"
+                                 instance="uk.org.oliveira.vg.settings.VGSettingsConfigurable"
+                                 id="uk.org.oliveira.vg.settings.VGSettingsConfigurable"
+                                 displayName="VG Settings"/>
+        <applicationService serviceImplementation="uk.org.oliveira.vg.VGState"/>
     </extensions>
 
     <applicationListeners>
-        <listener class="uk.org.oliveira.vg.version_json.FileChangeListener" topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
+        <listener class="uk.org.oliveira.vg.version_json.FileChangeListener"
+                  topic="com.intellij.openapi.vfs.newvfs.BulkFileListener"/>
     </applicationListeners>
-
 
     <actions>
         <!-- Add your actions here -->
