@@ -23,21 +23,30 @@ public class VGSettingsComponent {
     final private JBList<String> typeSuggestionsList = new JBList<>();
     final private ToolbarDecorator typeSuggestionsDecorator = ToolbarDecorator.createDecorator(this.typeSuggestionsList);
 
+    private final List<String> rolesSuggestions = new ArrayList<>();
+    final private JBList<String> rolesSuggestionsList = new JBList<>();
+    final private ToolbarDecorator rolesSuggestionsDecorator = ToolbarDecorator.createDecorator(this.rolesSuggestionsList);
 
     public JPanel getPanel() {
         VGState state = VGState.getInstance();
+
+        // Types
         this.typeSuggestions.addAll(Arrays.asList(state.typeSuggestions));
         this.typeSuggestionsList.setListData(state.typeSuggestions);
+
+        // Roles
+        this.rolesSuggestions.addAll(Arrays.asList(state.rolesSuggestions));
+        this.rolesSuggestionsList.setListData(state.rolesSuggestions);
+
         JPanel panel = new JPanel();
         panel.setBorder(BorderFactory.createEmptyBorder(0, 0, 50, 0));
         return FormBuilder.createFormBuilder()
                 .addLabeledComponent("Type suggestions", getTypeSuggestionsPanel(), true)
+                .addLabeledComponent("Roles suggestions", getRolesSuggestionsPanel(), true)
                 .getPanel();
     }
 
     private JPanel getTypeSuggestionsPanel() {
-        System.out.println(this.typeSuggestionsList.getFixedCellHeight());
-        System.out.println(this.typeSuggestionsList.getHeight());
         this.typeSuggestionsDecorator.setToolbarPosition(ActionToolbarPosition.RIGHT);
         this.typeSuggestionsDecorator.setAddAction(a -> {
             String input = Messages.showInputDialog("Which type would you like to add to suggestions?", "New Type", Messages.getQuestionIcon(), null, new InputValidator() {
@@ -62,7 +71,36 @@ public class VGSettingsComponent {
         return this.typeSuggestionsDecorator.createPanel();
     }
 
+    private JPanel getRolesSuggestionsPanel() {
+        this.rolesSuggestionsDecorator.setToolbarPosition(ActionToolbarPosition.RIGHT);
+        this.rolesSuggestionsDecorator.setAddAction(a -> {
+            String input = Messages.showInputDialog("Which role would you like to add to suggestions?", "New Role", Messages.getQuestionIcon(), null, new InputValidator() {
+                @Override
+                public boolean checkInput(@NlsSafe String inputString) {
+                    return !inputString.isEmpty();
+                }
+
+                @Override
+                public boolean canClose(@NlsSafe String inputString) {
+                    return !inputString.isEmpty();
+                }
+            });
+            this.rolesSuggestions.add(input.toUpperCase());
+            this.rolesSuggestionsList.setListData(this.rolesSuggestions.toArray(String[]::new));
+        }).setRemoveAction(a -> {
+            int i = this.rolesSuggestionsList.getSelectedIndex();
+            this.rolesSuggestions.remove(i);
+            this.rolesSuggestionsList.setListData(this.rolesSuggestions.toArray(String[]::new));
+        }).disableUpDownActions();
+
+        return this.rolesSuggestionsDecorator.createPanel();
+    }
+
     public String[] getTypeSuggestions() {
-        return this.typeSuggestions.toArray(String[]::new);
+        return this.rolesSuggestions.toArray(String[]::new);
+    }
+
+    public String[] getRolesSuggestions() {
+        return this.rolesSuggestions.toArray(String[]::new);
     }
 }

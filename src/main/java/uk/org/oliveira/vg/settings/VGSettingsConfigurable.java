@@ -27,15 +27,14 @@ public class VGSettingsConfigurable implements Configurable {
     @Override
     public boolean isModified() {
         VGState state = VGState.getInstance();
-        if (!Arrays.equals(this.component.getTypeSuggestions(), state.typeSuggestions)) {
-            return true;
-        }
-        return false;
+        return !Arrays.equals(this.component.getTypeSuggestions(), state.typeSuggestions) ||
+                !Arrays.equals(this.component.getRolesSuggestions(), state.rolesSuggestions);
     }
 
     @Override
     public void apply() throws ConfigurationException {
         VGState state = VGState.getInstance();
         state.typeSuggestions = this.component.getTypeSuggestions();
+        state.rolesSuggestions = this.component.getRolesSuggestions();
     }
 }

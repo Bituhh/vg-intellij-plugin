@@ -14,6 +14,7 @@ import org.jetbrains.annotations.Nullable;
 )
 public class VGState implements PersistentStateComponent<VGState> {
     public String[] typeSuggestions = {"BOOLEAN", "INTEGER", "TEXT", "JSON", "JSONB", "CHARACTER VARYING", "CHARACTER"};
+    public String[] rolesSuggestions = {};
 
     public static VGState getInstance() {
         return ServiceManager.getService(VGState.class);

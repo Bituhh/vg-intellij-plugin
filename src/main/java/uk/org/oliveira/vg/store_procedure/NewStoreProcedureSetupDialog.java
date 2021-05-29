@@ -43,7 +43,7 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
     private final JBList<String> argumentsList = new JBList<>();
     private final ToolbarDecorator argumentsDecorator = ToolbarDecorator.createDecorator(this.argumentsList);
 
-    private final Dimension defaultDimension = new Dimension(300, 30);
+    private final Dimension defaultDimension = new Dimension(335, 30);
 
     protected NewStoreProcedureSetupDialog(@Nullable Project project) {
         super(project, true);
@@ -102,7 +102,7 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
         JBLabel underscore = new JBLabel("_");
         panel.add(underscore);
 
-        this.name.setPreferredSize(this.defaultDimension);
+        this.name.setColumns(25);
         panel.add(this.name);
 
         return panel;
@@ -134,9 +134,9 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
     private JPanel getUserAuthorizationRolesPanel() {
         this.userAuthorizationRolesDecorator.setToolbarPosition(ActionToolbarPosition.RIGHT);
         this.userAuthorizationRolesDecorator.setAddAction(a -> {
-            Messages.InputDialog inputDialog = new Messages.InputDialog("Please provide a role name?", "Role Name", null, null, null);
-            if (inputDialog.showAndGet()) {
-                this.userAuthorizationRoles.add(inputDialog.getInputString());
+            AuthorizationRoleDialog dialog = new AuthorizationRoleDialog(project);
+            if (dialog.showAndGet()) {
+                this.userAuthorizationRoles.add(dialog.getRole());
                 this.userAuthorizationRolesList.setListData(this.userAuthorizationRoles.toArray(String[]::new));
             }
         }).setRemoveAction(a -> {
