@@ -5,6 +5,8 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.DialogWrapper;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.ui.ValidationInfo;
+import com.intellij.ui.TextFieldWithAutoCompletion;
+import com.intellij.ui.TextFieldWithAutoCompletionListProvider;
 import com.intellij.ui.ToolbarDecorator;
 import com.intellij.ui.components.JBLabel;
 import com.intellij.ui.components.JBList;
@@ -13,9 +15,12 @@ import com.intellij.ui.components.JBTextField;
 import com.intellij.util.ui.FormBuilder;
 import org.jdesktop.swingx.HorizontalLayout;
 import org.jetbrains.annotations.Nullable;
+import uk.org.oliveira.vg.VGState;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class NewStoreProcedureSetupDialog extends DialogWrapper {
@@ -28,7 +33,7 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
     private final JBRadioButton volatilityVolatileRadioButton = new JBRadioButton("Volatile");
     private final JBRadioButton volatilityImmutableRadioButton = new JBRadioButton("Immutable");
 
-    private final JBTextField returnType = new JBTextField("INTEGER");
+    private final TextFieldWithAutoCompletion<String> returnType;
 
     private final List<String> userAuthorizationRoles = new ArrayList<>();
     private final JBList<String> userAuthorizationRolesList = new JBList<>();
@@ -38,9 +43,17 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
     private final JBList<String> argumentsList = new JBList<>();
     private final ToolbarDecorator argumentsDecorator = ToolbarDecorator.createDecorator(this.argumentsList);
 
+    private final Dimension defaultDimension = new Dimension(300, 30);
+
     protected NewStoreProcedureSetupDialog(@Nullable Project project) {
         super(project, true);
         this.project = project;
+
+        // Type
+        VGState state = VGState.getInstance();
+        TextFieldWithAutoCompletionListProvider<String> provider = new TextFieldWithAutoCompletion.StringsCompletionProvider(Arrays.asList(state.typeSuggestions), null);
+        this.returnType = new TextFieldWithAutoCompletion<>(project, provider, false, null);
+
         init();
         setTitle("New Store Procedure Setup");
     }
@@ -89,7 +102,7 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
         JBLabel underscore = new JBLabel("_");
         panel.add(underscore);
 
-        this.name.setColumns(25);
+        this.name.setPreferredSize(this.defaultDimension);
         panel.add(this.name);
 
         return panel;
@@ -97,7 +110,7 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
 
     private JPanel getReturnTypePanel() {
         JPanel panel = new JPanel(new HorizontalLayout());
-        this.returnType.setColumns(30);
+        this.returnType.setPreferredSize(this.defaultDimension);
         panel.add(this.returnType);
         return panel;
     }

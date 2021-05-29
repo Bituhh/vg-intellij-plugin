@@ -21,18 +21,20 @@ import java.util.List;
 public class ArgumentsDialog extends DialogWrapper {
 
     private final JBTextField name = new JBTextField();
-    private final Project project;
-    private final TextFieldWithAutoCompletion type;
+    private final TextFieldWithAutoCompletion<String> type;
 
     private final Dimension defaultDimension = new Dimension(300, 30);
 
 
     protected ArgumentsDialog(@Nullable Project project) {
         super(project, true);
+
+        // Type
         VGState state = VGState.getInstance();
-        this.project = project;
         TextFieldWithAutoCompletionListProvider<String> provider = new TextFieldWithAutoCompletion.StringsCompletionProvider(Arrays.asList(state.typeSuggestions), null);
-        this.type = new TextFieldWithAutoCompletion<>(this.project, provider, false, null);
+        this.type = new TextFieldWithAutoCompletion<>(project, provider, false, null);
+
+
         init();
         setTitle("Argument Details");
     }
