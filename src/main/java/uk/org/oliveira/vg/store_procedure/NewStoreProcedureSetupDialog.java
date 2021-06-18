@@ -96,7 +96,6 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
 
     private JPanel getFileNameInputPanel() {
         JPanel panel = new JPanel(new HorizontalLayout());
-        this.prefix.requestFocus();
         panel.add(this.prefix);
 
         JBLabel underscore = new JBLabel("_");

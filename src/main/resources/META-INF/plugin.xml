@@ -46,6 +46,22 @@
                 <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewDir"/>
             </action>
 
+            <action class="uk.org.oliveira.vg.baseline.AddBaselineToCurrentFolderAction"
+                    text="VG: Add Baseline To Current Folder"
+                    icon="VGPluginIcons.AddBaselineToCurrentFolderAction"
+                    description="Adds the selected baseline file to the current folder.">
+                <override-text place="ProjectViewPopup" text="Add Baseline To Current Folder"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+            </action>
+
+            <action class="uk.org.oliveira.vg.version_json.CreateVersionJsonFileAction"
+                    text="VG: Rebuild 'version.json' File"
+                    icon="VGPluginIcons.RebuildVersionJsonFileAction"
+                    description="Rebuilds a new VG version.json file with currently available files.">
+                <override-text place="ProjectViewPopup" text="Rebuild 'version.json' File"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+            </action>
+
             <action class="uk.org.oliveira.vg.store_procedure.NewStoreProcedureAction"
                     text="VG: New Store Procedure"
                     icon="VGPluginIcons.NewStoreProcedureAction"
@@ -56,20 +72,6 @@
                 <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
             </action>
 
-            <action class="uk.org.oliveira.vg.baseline.AddBaselineToCurrentFolderAction"
-                    text="VG: Add Baseline To Current Folder"
-                    icon="VGPluginIcons.AddBaselineToCurrentFolderAction"
-                    description="Adds the selected baseline file to the current folder.">
-                <override-text place="ProjectViewPopup" text="Add Baseline To Current Folder"/>
-                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
-            </action>
-            <action class="uk.org.oliveira.vg.version_json.CreateVersionJsonFileAction"
-                    text="VG: Rebuild 'version.json' File"
-                    icon="VGPluginIcons.RebuildVersionJsonFileAction"
-                    description="Rebuilds a new VG version.json file with currently available files.">
-                <override-text place="ProjectViewPopup" text="Rebuild 'version.json' File"/>
-                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
-            </action>
         </group>
     </actions>
 </idea-plugin>
