@@ -11,6 +11,7 @@ import org.apache.commons.io.filefilter.RegexFileFilter;
 import uk.org.oliveira.vg.VGUtils;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,8 +32,13 @@ public class VersionJsonManager {
         Path scriptsFolderPath = Path.of(currentFolderPath.toString(), "scripts");
 
         List<VirtualFile> filesList = new ArrayList<>();
-        filesList.addAll(getFilesFrom(scriptsFolderPath));
-        filesList.addAll(getFilesFrom(schemaFolderPath));
+        if (Files.exists(scriptsFolderPath)) {
+            filesList.addAll(getFilesFrom(scriptsFolderPath));
+        }
+
+        if (Files.exists(schemaFolderPath)) {
+            filesList.addAll(getFilesFrom(schemaFolderPath));
+        }
 
         return filesList;
     }

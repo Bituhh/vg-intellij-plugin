@@ -31,7 +31,7 @@ public class CreateVersionJsonFileAction extends AnAction {
             project.save();
         }
         VirtualFile selectedFile = e.getData(PlatformDataKeys.VIRTUAL_FILE);
-        if (selectedFile != null) {
+        if (selectedFile != null && selectedFile.getName().equals("version.json")) {
             try {
                 getVersionJsonFiles(Path.of(selectedFile.getParent().getPath()));
                 selectedFile.refresh(true, true);

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
         storages = {@Storage("VGPlugin.xml")}
 )
 public class VGState implements PersistentStateComponent<VGState> {
-    public String[] typeSuggestions = {"BOOLEAN", "INTEGER", "TEXT", "JSON", "JSONB", "CHARACTER VARYING", "CHARACTER"};
+    public String[] typeSuggestions = {"BOOLEAN", "INTEGER", "TEXT", "JSON", "JSONB", "CHARACTER VARYING", "CHARACTER", "VOID"};
     public String[] rolesSuggestions = {};
 
     public static VGState getInstance() {

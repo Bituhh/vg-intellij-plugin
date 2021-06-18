@@ -25,7 +25,7 @@ public class FileChangeListener implements BulkFileListener {
 
             if ((isCreated || isDeleted) && !isChangedFromOutside) {
                 VirtualFile virtualFile = vFileEvent.getFile();
-                if (virtualFile != null) {
+                if (virtualFile != null && !virtualFile.isDirectory() && !virtualFile.getName().equals("version.json")) {
                     if (isCreated) {
                         operateOnCurrentFolder(
                                 virtualFile.getName().concat(" was created! Do you wish to add this file to 'version.json'?"),

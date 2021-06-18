@@ -23,7 +23,7 @@ public class AddBaselineToCurrentFolderAction extends AnAction {
         if (selectedFile != null) {
             String projectRootPath = VGUtils.getProjectRootPathFrom(selectedFile.getPath());
             if (VGUtils.getProjectStructure(Path.of(projectRootPath)) == VGUtils.ProjectStatus.FULLY_SETUP) {
-                e.getPresentation().setEnabled(!selectedFile.isDirectory());
+                e.getPresentation().setEnabled(!selectedFile.isDirectory() && selectedFile.getPath().contains("/postgres/schema"));
             } else {
                 e.getPresentation().setEnabled(false);
             }
