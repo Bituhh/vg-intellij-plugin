@@ -28,23 +28,12 @@
     </applicationListeners>
 
     <actions>
-        <!-- Add your actions here -->
-        <group id="uk.org.oliveira.vg"
+        <group id="VG"
                text="VG"
                icon="VGPluginIcons.PluginIcon"
                popup="true" searchable="true">
             <add-to-group group-id="ScopeViewPopupMenu" anchor="last"/>
             <add-to-group group-id="ProjectViewPopupMenu" anchor="last"/>
-
-            <action class="uk.org.oliveira.vg.current_folder.NewCurrentFolderAction"
-                    text="VG: New Current Folder"
-                    icon="VGPluginIcons.NewCurrentFolderAction"
-                    description="Create a new VG current folder.">
-                <override-text place="MainMenu" text="Current Folder"/>
-                <override-text place="ProjectViewPopup" text="Current Folder"/>
-                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
-                <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewDir"/>
-            </action>
 
             <action class="uk.org.oliveira.vg.baseline.AddBaselineToCurrentFolderAction"
                     text="VG: Add Baseline To Current Folder"
@@ -54,24 +43,41 @@
                 <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
             </action>
 
-            <action class="uk.org.oliveira.vg.version_json.CreateVersionJsonFileAction"
+            <action class="uk.org.oliveira.vg.version_json.RebuildVersionJsonFileAction"
                     text="VG: Rebuild 'version.json' File"
                     icon="VGPluginIcons.RebuildVersionJsonFileAction"
                     description="Rebuilds a new VG version.json file with currently available files.">
                 <override-text place="ProjectViewPopup" text="Rebuild 'version.json' File"/>
                 <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
             </action>
+        </group>
+
+        <group id="VGNew"
+               text="VG"
+               icon="VGPluginIcons.PluginIcon"
+               popup="true" searchable="false">
+            <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewDir"/>
 
             <action class="uk.org.oliveira.vg.store_procedure.NewStoreProcedureAction"
+                    id="NewStoreProcedureAction"
                     text="VG: New Store Procedure"
                     icon="VGPluginIcons.NewStoreProcedureAction"
                     description="Create a new templated store procedure.">
                 <override-text place="MainMenu" text="Store Procedure"/>
-                <override-text place="ProjectViewPopup" text="Store Procedure"/>
+                <override-text place="ProjectViewPopup" use-text-of-place="MainMenu"/>
                 <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
-                <add-to-group group-id="NewGroup" anchor="after" relative-to-action="NewFile"/>
             </action>
-
+            
+            <action class="uk.org.oliveira.vg.current_folder.NewCurrentFolderAction"
+                    id="NewCurrentFolderAction"
+                    text="VG: New Current Folder"
+                    icon="VGPluginIcons.NewCurrentFolderAction"
+                    description="Create a new VG current folder.">
+                <override-text place="MainMenu" text="Current Folder"/>
+                <override-text place="ProjectViewPopup" text="Current Folder"/>
+                <override-text place="ScopeViewPopup" use-text-of-place="ProjectViewPopup"/>
+            </action>
         </group>
+
     </actions>
 </idea-plugin>
