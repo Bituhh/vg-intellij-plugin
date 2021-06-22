@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.List;
 
-public class CreateVersionJsonFileAction extends AnAction {
+public class RebuildVersionJsonFileAction extends AnAction {
 
     @Override
     public void update(@NotNull AnActionEvent e) {
@@ -45,7 +45,7 @@ public class CreateVersionJsonFileAction extends AnAction {
 
     private static void getVersionJsonFiles(Path currentFolderPath) throws IOException {
         List<VirtualFile> filesList = VersionJsonManager.getVersionFiles(currentFolderPath);
-        CreateVersionJsonFileDialog dialog = new CreateVersionJsonFileDialog(filesList);
+        RebuildVersionJsonFileDialog dialog = new RebuildVersionJsonFileDialog(filesList);
         if (dialog.showAndGet()) {
             VersionJsonManager.createJsonFile(currentFolderPath, dialog.virtualFiles);
         }

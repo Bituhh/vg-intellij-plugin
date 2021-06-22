@@ -86,15 +86,7 @@ public class ArgumentsDialog extends DialogWrapper {
     }
 
     public String getType() {
-        String formattedType = this.type.getText().toUpperCase();
-
-        VGState state = VGState.getInstance();
-        List<String> tempList = new ArrayList<>(Arrays.asList(state.typeSuggestions));
-        if (!tempList.contains(formattedType)) {
-            tempList.add(formattedType);
-            state.typeSuggestions = tempList.toArray(String[]::new);
-        }
-
-        return formattedType;
+        VGState.getInstance().addTypeSuggestion(this.type.getText());
+        return this.type.getText().toUpperCase();
     }
 }

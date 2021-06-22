@@ -11,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.util.List;
 
-public class CreateVersionJsonFileDialog extends DialogWrapper {
+public class RebuildVersionJsonFileDialog extends DialogWrapper {
     private final JBList<VirtualFile> filesList = new JBList<>();
     private final ToolbarDecorator decorator = ToolbarDecorator.createDecorator(this.filesList);
     public List<VirtualFile> virtualFiles;
@@ -20,7 +20,7 @@ public class CreateVersionJsonFileDialog extends DialogWrapper {
         UP, DOWN
     }
 
-    protected CreateVersionJsonFileDialog(List<VirtualFile> virtualFiles) {
+    protected RebuildVersionJsonFileDialog(List<VirtualFile> virtualFiles) {
         super(true);
         init();
         setTitle("Organize Files");

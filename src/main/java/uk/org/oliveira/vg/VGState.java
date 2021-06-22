@@ -8,6 +8,11 @@ import com.intellij.util.xmlb.XmlSerializerUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+
 @State(
         name = "uk.org.oliveira.vg.VGState",
         storages = {@Storage("VGPlugin.xml")}
@@ -18,6 +23,15 @@ public class VGState implements PersistentStateComponent<VGState> {
 
     public static VGState getInstance() {
         return ServiceManager.getService(VGState.class);
+    }
+
+    public void addTypeSuggestion(String suggestion) {
+        suggestion = suggestion.toUpperCase();
+        List<String> tempList = new ArrayList<>(Arrays.asList(this.typeSuggestions));
+        if (!tempList.contains(suggestion)) {
+            tempList.add(suggestion);
+            this.typeSuggestions = tempList.toArray(String[]::new);
+        }
     }
 
     @Override

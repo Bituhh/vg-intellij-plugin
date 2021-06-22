@@ -195,7 +195,8 @@ public class NewStoreProcedureSetupDialog extends DialogWrapper {
     }
 
     public String getReturnType() {
-        return returnType.getText().toUpperCase();
+        VGState.getInstance().addTypeSuggestion(this.returnType.getText());
+        return this.returnType.getText().toUpperCase();
     }
 
     public String getVolatility() {
