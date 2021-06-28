@@ -34,6 +34,14 @@ public class VGState implements PersistentStateComponent<VGState> {
         }
     }
 
+    public void addRoleSuggestion(String suggestion) {
+        List<String> tempList = new ArrayList<>(Arrays.asList(this.rolesSuggestions));
+        if (!tempList.contains(suggestion)) {
+            tempList.add(suggestion);
+            this.rolesSuggestions = tempList.toArray(String[]::new);
+        }
+    }
+
     @Override
     public @Nullable VGState getState() {
         return this;

@@ -44,10 +44,10 @@ public class AddBaselineToCurrentFolderAction extends AnAction {
             try {
                 Path target = BaselineManager.moveFileToCurrentFolder(selectedFile.getPath());
 
-                // Need to refresh because files were just created.
-                VGUtils.refreshProjectRootFrom(selectedFile.getPath(), false);
-
                 if (NotificationManager.fileChangedQuestion("Do you want to add this file to 'version.json'") == NotificationManager.NotificationResponse.YES) {
+                    // Need to refresh because files were just created.
+                    VGUtils.refreshProjectRootFrom(selectedFile.getPath());
+
                     VirtualFile newFile = LocalFileSystem.getInstance().findFileByNioFile(target);
                     if (newFile != null) {
                         VersionJsonManager.addFile(newFile);

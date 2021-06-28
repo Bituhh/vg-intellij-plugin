@@ -39,35 +39,31 @@ public class VGUtils {
     }
 
     @Nullable
-    public static String getProjectRootPathFrom(String path) {
+    public static String getProjectRootPathFrom(@NotNull String path) {
         path = path.replace("\\", "/");
         int rootIndex = path.indexOf("/postgres");
-        if (rootIndex == -1) {
-            Path siblingFolderPath = Path.of(path, "../postgres");
+        if (rootIndex == -1) { // postgres folder is not on the selected path
             if (Files.exists(Path.of(path, "/postgres"))) { // check if current path is root
                 return path;
-            } else if (Files.exists(siblingFolderPath)) { // check if one path before is root. case current is sibling folder of ./postgres
+            }
+            Path siblingFolderPath = Path.of(path, "../postgres");
+            if (Files.exists(siblingFolderPath)) { // check if one path before is root. case current is sibling folder of ./postgres
                 VirtualFile file = LocalFileSystem.getInstance().findFileByNioFile(siblingFolderPath);
                 if (file != null) {
                     return file.getParent().getPath();
                 }
                 return null;
-            } else {
-                return null;
             }
+            return null;
         }
         return path.substring(0, rootIndex);
     }
 
-    public static void refreshProjectRootFrom(String path, boolean asynchronous) {
+    public static void refreshProjectRootFrom(@NotNull String path) {
         VirtualFile projectRootFile = getProjectRootFileFrom(path);
         if (projectRootFile != null) {
-            projectRootFile.refresh(asynchronous, true);
+            projectRootFile.refresh(false, true);
         }
-    }
-
-    public static void refreshProjectRootFrom(String path) {
-        refreshProjectRootFrom(path, true);
     }
 
     public static ProjectStatus getProjectStructure(@NotNull Path projectPath) {

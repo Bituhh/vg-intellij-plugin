@@ -85,7 +85,7 @@ public class VGSettingsComponent {
                     return !inputString.isEmpty();
                 }
             });
-            this.rolesSuggestions.add(input.toUpperCase());
+            this.rolesSuggestions.add(input);
             this.rolesSuggestionsList.setListData(this.rolesSuggestions.toArray(String[]::new));
         }).setRemoveAction(a -> {
             int i = this.rolesSuggestionsList.getSelectedIndex();
@@ -97,7 +97,7 @@ public class VGSettingsComponent {
     }
 
     public String[] getTypeSuggestions() {
-        return this.rolesSuggestions.toArray(String[]::new);
+        return this.typeSuggestions.toArray(String[]::new);
     }
 
     public String[] getRolesSuggestions() {

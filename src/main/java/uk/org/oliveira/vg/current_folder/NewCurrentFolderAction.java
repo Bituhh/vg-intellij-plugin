@@ -89,7 +89,7 @@ public class NewCurrentFolderAction extends AnAction {
             }
 
             // Need to refresh because files were just created.
-            VGUtils.refreshProjectRootFrom(projectRootPath.toString(), false);
+            VGUtils.refreshProjectRootFrom(projectRootPath.toString());
 
             List<VirtualFile> versionJsonFiles = VersionJsonManager.getVersionFiles(currentFolderPath);
             VersionJsonManager.createJsonFile(currentFolderPath, versionJsonFiles);

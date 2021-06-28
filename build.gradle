@@ -27,7 +27,8 @@ patchPluginXml {
         <li>Creates a new 'current' folder.</li>
         <li>Manages 'version.json' file, automatic add and remove when new files are added.</li>
         <li>Add baseline file to 'current' folder.</li>
-        <li>Adds predefined store procedure template.</li>
+        <li>Adds predefined store procedure template with roles.</li>
+        <li>Settings that defines the suggestions.</li>
     </ul>
     """
 }

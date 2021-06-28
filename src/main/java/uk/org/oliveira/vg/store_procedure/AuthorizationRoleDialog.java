@@ -57,13 +57,7 @@ public class AuthorizationRoleDialog extends DialogWrapper {
     }
 
     public String getRole() {
-        VGState state = VGState.getInstance();
-        List<String> tempList = new ArrayList<>(Arrays.asList(state.rolesSuggestions));
-        if (!tempList.contains(this.role.getText())) {
-            tempList.add(this.role.getText());
-            state.rolesSuggestions = tempList.toArray(String[]::new);
-        }
-
+        VGState.getInstance().addRoleSuggestion(this.role.getText());
         return this.role.getText();
     }
 }

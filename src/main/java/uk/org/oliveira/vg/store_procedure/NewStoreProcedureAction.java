@@ -56,7 +56,9 @@ public class NewStoreProcedureAction extends AnAction {
 
 
                     // Need to refresh because files were just created.
-                    VGUtils.refreshProjectRootFrom(projectRootPath, false);
+                    if (projectRootPath != null) {
+                        VGUtils.refreshProjectRootFrom(projectRootPath);
+                    }
 
                     VirtualFile targetFile = LocalFileSystem.getInstance().findFileByNioFile(Path.of(targetPath));
                     if (targetFile != null) {
