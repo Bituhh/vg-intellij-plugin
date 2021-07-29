@@ -2,6 +2,7 @@
     <id>uk.org.oliveira.vg</id>
     <name>VG</name>
     <vendor email="victor@oliveira.org.uk" url="http://oliveira.org.uk">Oliveira.org.uk</vendor>
+    <idea-version since-build="203"/>
 
     <description> <![CDATA[
      DB version manager plugin used internally for Cordant Central Services IT Team.

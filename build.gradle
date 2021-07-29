@@ -4,7 +4,7 @@ plugins {
 }
 
 group 'uk.org.oliveira'
-version '1.0.0'
+version '1.1.0'
 
 repositories {
     mavenCentral()
@@ -16,13 +16,18 @@ dependencies {
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
- intellij {
-    version '2021.1.1'
+intellij {
+    version '2021.2'
+    updateSinceUntilBuild false
 }
 
 patchPluginXml {
     changeNotes """
     <h2>current</h2>
+    <ul>
+        <li>Updating since build to 203.* until latest</li>
+    </ul>
+    <h2>v1.0.0</h2>
     <ul>
         <li>Creates a new 'current' folder.</li>
         <li>Manages 'version.json' file, automatic add and remove when new files are added.</li>
@@ -32,6 +37,11 @@ patchPluginXml {
     </ul>
     """
 }
+
 test {
     useJUnitPlatform()
+}
+
+publishPlugin {
+    token System.getenv("uk_org_oliveira_intellijPublishToken")
 }
